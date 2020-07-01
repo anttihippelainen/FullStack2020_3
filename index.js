@@ -4,10 +4,9 @@ const morgan = require('morgan')
 const app = express()
 const cors = require('cors')
 const Person = require('./models/Person')
-const { Mongoose } = require('mongoose')
 
-morgan.token('data', function(req, res){
-    return (JSON.stringify(req.body))
+morgan.token('data', function(req){
+  return (JSON.stringify(req.body))
 })
 
 app.use(cors())
@@ -17,7 +16,7 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :d
 
 
 app.get('/api/persons', (request, response) => {
-  Person.find({}).then(result =>{
+  Person.find({}).then(result => {
     response.json(result)
   })
 })
@@ -26,9 +25,9 @@ app.get('/info', (request, response) => {
 
   let persons = []
 
-  Person.find({}).then(result =>{
-    result.forEach(p =>{
-        persons.push(p)
+  Person.find({}).then(result => {
+    result.forEach(p => {
+      persons.push(p)
     })
     let date = new Date()
     response.send(
@@ -49,7 +48,7 @@ app.post('/api/persons', (request, response, next) => {
   person.save().then(savedPerson => {
     response.json(savedPerson)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
@@ -60,7 +59,7 @@ app.get('/api/persons/:id', (request, response, next) => {
       response.status(404).end()
     }
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
@@ -74,13 +73,13 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
-  
+
   const person = {
     name: body.name,
     number: body.number,
   }
 
-  Person.findByIdAndUpdate(request.params.id, person, {new: true})
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
     .then(updatedPerson => {
       response.json(updatedPerson)
     })
