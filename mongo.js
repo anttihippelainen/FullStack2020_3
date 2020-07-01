@@ -12,7 +12,7 @@ if (process.argv.length<3) {
     `mongodb+srv://fullstack:${password}@fullstackcluster.huqd8.mongodb.net/puhelinluettelo?retryWrites=true&w=majority`
   
   mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-  
+
   const personSchema = new mongoose.Schema({
     name: String,
     number: String,
